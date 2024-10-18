@@ -43,10 +43,11 @@ module "eth_api" {
 | name                  | Name of the instance                                                                                                             | string       | n/a           | yes      |
 | env                   | Environment (e.g., dev, prod)                                                                                                    | string       | n/a           | yes      |
 | network               | VPC Network for the instance                                                                                                     | string       | n/a           | yes      |
-| network               | Subnetwork for the instance                                                                                                      | string       | n/a           | yes      |
+| subnetwork            | Subnetwork for the instance                                                                                                      | string       | n/a           | yes      |
 | zone                  | Zone for the instance                                                                                                            | string       | n/a           | yes      |
 | image                 | [The image to use for the boot disk](https://cloud.google.com/compute/docs/images/os-details)                                    | string       | n/a           | yes      |
 | machine_type          | [Machine type for the instance](https://cloud.google.com/compute/docs/networking/configure-vm-with-high-bandwidth-configuration) | string       | e2-standard-2 | no       |
+| extra_disk_name       | Custom name for the additional disk                                                                                              | string       | ""            | no       |
 | extra_disk_size       | Size of the additional disk (GB), set to 0 to disable                                                                            | number       | 0             | no       |
 | extra_disk_type       | Type of the additional disk (pd-ssd, pd-balanced, etc.)                                                                          | string       | "pd-balanced" | no       |
 | extra_disk_snapshot   | Optional snapshot to restore the additional disk from                                                                            | string       | ""            | no       |
@@ -59,7 +60,6 @@ module "eth_api" {
 | ssh_keys              | List of SSH keys allowed to access the instance                                                                                  | list(object) | []            | no       |
 | service_account_email | Service account email to attach to the instance                                                                                  | string       | false         | no       |
 | backup_enable         | Enable backup policy for the additional disk                                                                                     | bool         | false         | no       |
-| extra_disk_name       | Custom name for the additional disk                                                                                              | string       | ""            | no       |
 
 ## Outputs
 
