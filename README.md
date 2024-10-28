@@ -1,4 +1,4 @@
-## Terraform Module: Google Compute Instance with External IP and Extra Disk
+# Google Cloud VM Module
 
 This Terraform module creates a Google Compute Engine instance with optional external IP and additional disk management features. It supports attaching an external disk, backup policies, and configuring network interfaces with or without an external IP.
 
