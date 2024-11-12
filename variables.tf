@@ -89,7 +89,7 @@ variable "extra_disk_name" {
 }
 
 variable "stopping_for_update" {
-  default     = false
+  default     = true
   description = "If true, allows Terraform to stop the instance to update its properties."
 }
 
