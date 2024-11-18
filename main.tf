@@ -7,6 +7,7 @@ resource "google_compute_address" "ext_ip" {
   region       = substr(var.zone, 0, length(var.zone) - 2)
 }
 
+# Create additional disk
 resource "google_compute_disk" "ext_disk" {
   count    = var.extra_disk_size == 0 ? 0 : 1
   name     = var.extra_disk_name == "" ? "${var.name}-extra" : var.extra_disk_name
@@ -17,6 +18,7 @@ resource "google_compute_disk" "ext_disk" {
   size     = var.extra_disk_size
 }
 
+# Create snapshot policy
 resource "google_compute_resource_policy" "ext_disk" {
   count  = var.backup_enable && var.extra_disk_size != 0 ? 1 : 0
   name   = var.extra_disk_name == "" ? "${var.name}-backup-policy" : "${var.extra_disk_name}-backup-policy"
@@ -24,12 +26,12 @@ resource "google_compute_resource_policy" "ext_disk" {
   snapshot_schedule_policy {
     schedule {
       daily_schedule {
-        days_in_cycle = 1
-        start_time    = "04:00"
+        days_in_cycle = var.snapshot_schedule_days_in_cycle
+        start_time    = var.snapshot_schedule_start_time
       }
     }
     retention_policy {
-      max_retention_days    = 30
+      max_retention_days    = var.snapshot_schedule_max_retention_days
       on_source_disk_delete = "KEEP_AUTO_SNAPSHOTS"
     }
   }
@@ -42,21 +44,14 @@ resource "google_compute_disk_resource_policy_attachment" "ext_disk" {
   zone  = var.zone
 }
 
-# # Random choise zone
-# resource "random_shuffle" "az" {
-#   input        = var.zones
-#   result_count = 1
-# }
-
-# Create instance for bastion
+# Create instance
 resource "google_compute_instance" "vm" {
-  name         = var.name
-  machine_type = var.machine_type
-  # zone         = var.zone == "" ? random_shuffle.az.result[0] : var.zone
+  name                      = var.name
+  machine_type              = var.machine_type
   zone                      = var.zone
   deletion_protection       = var.deletion_protection
   description               = var.description
-  allow_stopping_for_update = true
+  allow_stopping_for_update = var.stopping_for_update
   labels                    = var.labels
   tags                      = var.tags
 
