@@ -14,6 +14,6 @@
 
 ### Changes ([help](https://www.conventionalcommits.org/en/v1.0.0/#summary))
 
-- feat: Highlights the new features introduced in your PR
-- fix: Describes the issues you’ve resolved
-- style: Details the improvements made to the design or formatting
+- feat: Introduces a new feature or significant enhancement to the codebase.
+- fix: Resolves a bug or issue affecting functionality.
+- style: Updates code style, formatting, or non-functional changes (e.g., linting, spacing, comments).
