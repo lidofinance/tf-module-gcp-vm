@@ -3,7 +3,7 @@ output "vm_ext_ip" {
 }
 
 output "vm_int_ip" {
-  value = google_compute_instance.vm.network_interface.0.network_ip
+  value = google_compute_instance.vm.network_interface[0].network_ip
 }
 
 output "vm_name" {

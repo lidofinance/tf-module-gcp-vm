@@ -1,10 +1,12 @@
 name: Create Release
 
 on:
+  workflow_dispatch:
   push:
-    # Sequence of patterns matched against refs/tags
+    branches:
+      - main
     tags:
-      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
+      - "*"
 
 permissions:
   contents: write
@@ -15,6 +17,22 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
+      - name: Extract GitHub Tag
+        id: extract_tag
+        run: echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Validate SemVer Format
+        run: |
+          echo $GITHUB_ENV
+          SEMVER_REGEX="[0-9]+\.[0-9]+\.[0-9]+$"
+
+          if [[ ! $TAG =~ $SEMVER_REGEX ]]; then
+            echo "❌ Tag '$TAG' is not a valid SemVer format (X.Y.Z)."
+            exit 1
+          fi
+
+          echo "✅ Tag '$TAG' is valid!"
+
       - name: Checkout code
         uses: actions/checkout@v2
 
