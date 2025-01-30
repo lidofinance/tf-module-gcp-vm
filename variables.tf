@@ -132,7 +132,7 @@ variable "subnetwork" {
   description = "The name or self_link of the subnetwork to attach to interface"
 }
 variable "labels" {
-  type        = string
+  type        = map(any)
   description = "A map of key/value label pairs to assign to the instance."
 }
 variable "image" {
