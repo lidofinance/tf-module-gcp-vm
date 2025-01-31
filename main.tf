@@ -89,7 +89,7 @@ resource "google_compute_instance" "vm" {
   }
 
   dynamic "service_account" {
-    for_each = var.service_account_email == false ? [] : [1]
+    for_each = var.service_account_email == "no" ? [] : [1]
     content {
       email  = var.service_account_email
       scopes = ["cloud-platform"]
