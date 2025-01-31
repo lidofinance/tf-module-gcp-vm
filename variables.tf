@@ -83,8 +83,8 @@ variable "description" {
 }
 
 variable "service_account_email" {
-  type        = bool
-  default     = false
+  type        = string
+  default     = "no"
   description = "The service account of an instance."
 }
 
