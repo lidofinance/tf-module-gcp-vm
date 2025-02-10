@@ -89,8 +89,11 @@ variable "service_account_email" {
 }
 
 variable "ssh_keys" {
-  type        = string
-  default     = ""
+  type = list(object({
+    user      = string
+    publickey = string
+  }))
+  default     = []
   description = "List of public ssh keys that have access to the VM"
 }
 
