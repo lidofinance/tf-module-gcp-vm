@@ -70,3 +70,38 @@ module "eth_api" {
 | vm_name   | The name of the instance                             |
 | labels    | Labels assigned to the instance                      |
 | team      | The value of the team label assigned to the instance |
+
+## How to Create a Release
+
+Before triggering the release workflow, ensure the following:
+
+1. The message with which the PR was merged into the main branch has a sufficient description of the functionality of the new release.
+2. You changes merged in main branch.
+3. The tag you are going to apply has the [SEMVER](https://semver.org/) format
+   - Format: X.Y.Z (e.g., 1.0.0, 0.2.3)
+   - No prefix (v or otherwise).
+
+### Release creation
+
+Create and push a Git tag that follows semantic versioning.
+
+1. Switch to main branch
+
+```
+git checkout main
+```
+
+2. Tag Your Commit
+
+```
+git tag 0.1.0
+```
+
+> [!IMPORTANT]
+> Make sure you're tagging a commit on the main branch.
+
+3. Push your tag
+
+```
+git push --tag origin main
+```
