@@ -71,37 +71,43 @@ module "eth_api" {
 | labels    | Labels assigned to the instance                      |
 | team      | The value of the team label assigned to the instance |
 
-## How to Create a Release
+## 📦 How to Create a Release
 
-Before triggering the release workflow, ensure the following:
+Before triggering the release workflow, please make sure the following criteria are met:
 
-1. The message with which the PR was merged into the main branch has a sufficient description of the functionality of the new release.
-2. You changes merged in main branch.
-3. The tag you are going to apply has the [SEMVER](https://semver.org/) format
-   - Format: X.Y.Z (e.g., 1.0.0, 0.2.3)
-   - No prefix (v or otherwise).
+1. The **pull request message** that merged your changes into the `main` branch includes a clear and descriptive summary of the new functionality or changes.
+2. Your **changes have been successfully merged into the `main` branch**.
+3. The **tag you intend to use follows [Semantic Versioning (SEMVER)](https://semver.org/)**:
+   - Format: `X.Y.Z` (e.g., `1.0.0`, `0.2.3`)
+   - Do **not** include a `v` prefix (e.g., `v1.0.0` ❌).
 
-### Release creation
+### Releasing a New Version
 
-Create and push a Git tag that follows semantic versioning.
+To trigger the release workflow, create and push a valid semantic version tag from the `main` branch.
 
-1. Switch to main branch
+#### Step-by-Step
 
-```
+1. **Switch to the `main` branch**
+
+```bash
 git checkout main
 ```
 
-2. Tag Your Commit
+2. **Create a semantic version tag**
 
-```
+Replace `0.1.0` with the appropriate version number for your release:
+
+```bash
 git tag 0.1.0
 ```
 
 > [!IMPORTANT]
-> Make sure you're tagging a commit on the main branch.
+> Ensure the tag points to the latest commit on the `main` branch.
 
-3. Push your tag
+3. **Push the tag to GitHub**
 
-```
+```bash
 git push --tag origin main
 ```
+
+This will automatically trigger the GitHub Actions workflow to generate a release based on the recent commits.
