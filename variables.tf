@@ -1,5 +1,5 @@
 variable "external_ip" {
-  type        = string
+  type        = bool
   default     = false
   description = "Access configurations, i.e. IPs via which this instance can be accessed via the Internet."
 }
