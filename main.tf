@@ -79,7 +79,7 @@ resource "google_compute_instance" "vm" {
     dynamic "access_config" {
       for_each = var.external_ip == false ? [] : [1]
       content {
-        nat_ip = google_compute_address.ext_ip[0].address
+        nat_ip = var.external_ip ? google_compute_address.ext_ip[0].address : null
       }
     }
   }
