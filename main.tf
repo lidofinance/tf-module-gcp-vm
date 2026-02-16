@@ -55,6 +55,16 @@ resource "google_compute_instance" "vm" {
   labels                    = var.labels
   tags                      = var.tags
 
+  dynamic "scheduling" {
+    for_each = var.spot_instance ? [1] : []
+    content {
+      provisioning_model  = "SPOT"
+      preemptible         = true
+      automatic_restart   = false
+      on_host_maintenance = "TERMINATE"
+    }
+  }
+
   boot_disk {
     initialize_params {
       image = var.image
@@ -103,4 +113,3 @@ resource "google_compute_instance" "vm" {
   ]
 
 }
-

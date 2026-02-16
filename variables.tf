@@ -28,6 +28,12 @@ variable "deletion_protection" {
   description = "Enable deletion protection on this instance."
 }
 
+variable "spot_instance" {
+  type        = bool
+  default     = false
+  description = "Enable Spot provisioning for the instance."
+}
+
 variable "machine_type" {
   type        = string
   default     = "e2-standard-2"

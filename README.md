@@ -9,6 +9,7 @@ This Terraform module creates a Google Compute Engine instance with optional ext
 - Attach an additional disk with optional snapshot scheduling and backup policy.
 - Configure SSH keys, service accounts, labels, and network settings.
 - Support for custom machine types, disk types, and automatic backups.
+- Optionally provision the instance as a Spot VM.
 
 ## Usage
 
@@ -19,6 +20,7 @@ module "eth_api" {
   env                 = terraform.workspace
   machine_type        = "n1-standard-1"
   backup_enable       = False
+  spot_instance       = true
   description         = "Some description of VM"
   image               = "centos-stream-9"
   network             = "vpc-prod"
@@ -60,6 +62,7 @@ module "eth_api" {
 | ssh_keys              | List of SSH keys allowed to access the instance                                                                                  | list(object) | []            | no       |
 | service_account_email | Service account email to attach to the instance                                                                                  | string       | false         | no       |
 | backup_enable         | Enable backup policy for the additional disk                                                                                     | bool         | false         | no       |
+| spot_instance         | Enable Spot provisioning for the instance                                                                                        | bool         | false         | no       |
 
 ## Outputs
 
