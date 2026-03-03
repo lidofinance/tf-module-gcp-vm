@@ -6,6 +6,7 @@ This Terraform module creates a Google Compute Engine instance with optional ext
 
 - Provision a Google Compute Engine instance.
 - Optionally create an external IP for the instance.
+- Set network tier for external network (we use PREMIUM by default).
 - Attach an additional disk with optional snapshot scheduling and backup policy.
 - Configure SSH keys, service accounts, labels, and network settings.
 - Support for custom machine types, disk types, and automatic backups.
@@ -48,6 +49,7 @@ module "eth_api" {
 | subnetwork            | Subnetwork for the instance                                                                                                      | string       | n/a           | yes      |
 | zone                  | Zone for the instance                                                                                                            | string       | n/a           | yes      |
 | image                 | [The image to use for the boot disk](https://cloud.google.com/compute/docs/images/os-details)                                    | string       | n/a           | yes      |
+| network_tier          | Network tier for external IPs (STANDARD or PREMIUM).                                                                             | string       | PREMIUM       | no       |
 | machine_type          | [Machine type for the instance](https://cloud.google.com/compute/docs/networking/configure-vm-with-high-bandwidth-configuration) | string       | e2-standard-2 | no       |
 | extra_disk_name       | Custom name for the additional disk                                                                                              | string       | ""            | no       |
 | extra_disk_size       | Size of the additional disk (GB), set to 0 to disable                                                                            | number       | 0             | no       |
