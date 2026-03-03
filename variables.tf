@@ -4,6 +4,12 @@ variable "external_ip" {
   description = "Access configurations, i.e. IPs via which this instance can be accessed via the Internet."
 }
 
+variable "network_tier" {
+  type        = string
+  default     = "PREMIUM"
+  description = "Network tier for external IPs (STANDARD or PREMIUM)."
+}
+
 variable "snapshot_schedule_days_in_cycle" {
   type        = number
   default     = 1

@@ -4,6 +4,7 @@ resource "google_compute_address" "ext_ip" {
   name         = "ext-ip-${var.name}"
   description  = "External IP for ${var.name} in ${var.env} environment"
   address_type = "EXTERNAL"
+  network_tier = var.network_tier
   region       = substr(var.zone, 0, length(var.zone) - 2)
 }
 
@@ -89,7 +90,8 @@ resource "google_compute_instance" "vm" {
     dynamic "access_config" {
       for_each = var.external_ip == false ? [] : [1]
       content {
-        nat_ip = var.external_ip ? google_compute_address.ext_ip[0].address : null
+        nat_ip       = var.external_ip ? google_compute_address.ext_ip[0].address : null
+        network_tier = var.network_tier
       }
     }
   }
