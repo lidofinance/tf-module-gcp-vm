@@ -75,14 +75,6 @@ resource "google_compute_instance" "vm" {
     auto_delete = var.boot_disk_auto_delete
   }
 
-  dynamic "attached_disk" {
-    for_each = var.extra_disk_size == 0 ? [] : [1]
-    content {
-      source      = google_compute_disk.ext_disk[0].id
-      device_name = var.name
-    }
-  }
-
   network_interface {
     network    = var.network
     subnetwork = var.subnetwork
@@ -109,9 +101,24 @@ resource "google_compute_instance" "vm" {
 
   }
 
+  # The extra disk is attached by google_compute_attached_disk below. Disks
+  # attached by others (e.g. Kubernetes CSI volumes) are not managed here.
+  lifecycle {
+    ignore_changes = [attached_disk]
+  }
+
   depends_on = [
     google_compute_address.ext_ip,
     google_compute_disk.ext_disk
   ]
 
+}
+
+# Attach additional disk
+resource "google_compute_attached_disk" "ext_disk" {
+  count       = var.extra_disk_size == 0 ? 0 : 1
+  disk        = google_compute_disk.ext_disk[0].id
+  instance    = google_compute_instance.vm.id
+  zone        = var.zone
+  device_name = var.name
 }
