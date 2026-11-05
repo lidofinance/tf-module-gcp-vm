@@ -76,6 +76,29 @@ module "eth_api" {
 | labels    | Labels assigned to the instance                      |
 | team      | The value of the team label assigned to the instance |
 
+## Disks attached by others
+
+The instance ignores `attached_disk`. The extra disk is attached by a separate
+`google_compute_attached_disk`, so Terraform still attaches, replaces and
+re-attaches it, and leaves other disks (e.g. Kubernetes CSI volumes) alone.
+
+## Upgrading from 0.1.x
+
+Import the extra disk attachment of each existing VM once, before the first
+apply. Otherwise the apply fails: the disk is already attached. The disk name
+is `<vm name>-extra` unless `extra_disk_name` is set.
+
+```hcl
+import {
+  to = module.<name>.google_compute_attached_disk.ext_disk[0]
+  id = "projects/<project>/zones/<zone>/instances/<vm name>/<disk name>"
+}
+```
+
+Import blocks need Terraform 1.5+. With older versions use `terraform import`
+with the same address and ID. After the import, `terraform plan` shows no
+changes.
+
 ## 📦 How to Create a Release
 
 Before triggering the release workflow, please make sure the following criteria are met:
