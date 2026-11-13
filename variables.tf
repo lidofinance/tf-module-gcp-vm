@@ -109,6 +109,12 @@ variable "ssh_keys" {
   description = "List of public ssh keys that have access to the VM"
 }
 
+variable "metadata" {
+  type        = map(string)
+  default     = {}
+  description = "Extra instance metadata, e.g. startup-script or user-data. The ssh-keys key always comes from ssh_keys."
+}
+
 variable "backup_enable" {
   type        = bool
   default     = false

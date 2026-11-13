@@ -88,9 +88,11 @@ resource "google_compute_instance" "vm" {
     }
   }
 
-  metadata = {
+  # Extra keys go through metadata, which GCP updates in place. Do not move
+  # them to metadata_startup_script: a change to it replaces the instance.
+  metadata = merge(var.metadata, {
     ssh-keys = var.ssh_keys == "" ? "" : join("\n", [for key in var.ssh_keys : "${key.user}:${key.publickey}"])
-  }
+  })
 
   dynamic "service_account" {
     for_each = var.service_account_email == "no" ? [] : [1]
