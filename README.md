@@ -62,6 +62,7 @@ module "eth_api" {
 | tags                  | List of tags to assign to the instance                                                                                           | list(string) | []            | no       |
 | description           | Description for the instance                                                                                                     | string       | ""            | no       |
 | ssh_keys              | List of SSH keys allowed to access the instance                                                                                  | list(object) | []            | no       |
+| metadata              | Extra instance metadata, e.g. `startup-script` or `user-data`. Updated in place. `ssh-keys` always comes from `ssh_keys`         | map(string)  | {}            | no       |
 | service_account_email | Service account email to attach to the instance                                                                                  | string       | false         | no       |
 | backup_enable         | Enable backup policy for the additional disk                                                                                     | bool         | false         | no       |
 | spot_instance         | Enable Spot provisioning for the instance                                                                                        | bool         | false         | no       |
